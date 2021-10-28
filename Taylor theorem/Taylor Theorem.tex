@@ -1,0 +1,319 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in, a4paper]{geometry}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{setspace}  % set spacing
+
+\setstretch{1.25}  %stretch line space to multiple x
+
+\usepackage[dvipsnames,table, xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
+\usepackage{shadowtext}
+
+\usepackage{indentfirst} % indent the first paragraph of each section
+
+\usepackage{float} %determine the position of figures in the document
+
+\usepackage{tabularx} % extra features for tabular environment
+
+\usepackage{amsmath, amsfonts, amssymb}  % improve math presentation
+
+\usepackage{blkarray, bigstrut}
+
+\usepackage{makecell}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+\usepackage{graphicx} % takes care of graphic including machinery
+
+\graphicspath{ {../../logos/} }
+
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+\usepackage{caption}
+
+\usepackage{subcaption}
+
+\usepackage{tikz}
+
+\usepackage{lipsum,lmodern}
+
+\usepackage[most]{tcolorbox}
+
+\usetikzlibrary{trees}  %add binary trees
+
+\usetikzlibrary {positioning}
+
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+
+\usepackage{blindtext}
+
+\usepackage{dirtytalk} %quotation marks
+
+
+%********************************
+
+%Bibliography
+
+\usepackage[backend=biber,  style=alphabetic,  sorting=ynt]{biblatex}
+
+\addbibresource{../../Mybib.bib}
+
+
+%********************************
+
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+
+\fancyhf{}
+
+\lhead{\footnotesize {Math notes: Taylor's Theorem} }
+\rhead{\footnotesize { } }
+\cfoot{- \thepage \ -}
+
+\title{\vspace{-90pt} 
+
+
+%**************************************************
+
+% Title Part
+\textbf  {Peer-graded Assignment} }
+\author{Cui, Xiaolong(Larry)}
+\date{\today}
+
+
+%*************************************************
+
+\begin{document}
+
+%\maketitle
+
+\thispagestyle{plain}
+
+%*************************************************
+
+\begin{figure}[H] %[!tbp]
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{uol}
+    %\caption{Flower one.}
+    %\label{fig:f1}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{goldsmiths}
+    %\caption{Flower two.}
+    %\label{fig:f2}
+  \end{subfigure}
+  %\caption{My flowers.}
+\end{figure}
+
+%****************************************************
+
+\begin{flushright}
+
+\footnotesize {Sept. 18th,  2021}
+\end{flushright}
+
+\begin{center}
+\textbf{Introduction and Proof of Taylor's Theorum} \\
+\footnotesize {Study Notes $ | $ Written by Larry Cui}
+\end{center}
+
+%***************************************************
+
+%\begin{abstract}
+%\end{abstract}
+
+
+%***************************************************
+
+\setcounter{figure}{0}
+
+\vspace{10pt}
+
+
+Taylor's Theorem is a very powerful tool to approximate any functions that are infinitely differentiable on a certain interval between $a$ and $b$.  Of course,  the exact value of $a$ and $b$ need to be carefully defined,  so the formula/series developed by the theorem shall converge within the defined interval.
+
+
+\section {\large Description}
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} Taylor's Theorem} If $f$ and its first $n$ derivatives $f', f'',  \dots , f^{(n)}$ are continuous on the closed interval between $a$ and $b$, and $f^{(n)}$ is differentiable on the open interval between$a$ and $b$,  then there exists a number $c$ between $a$ and $b$ such that
+$$
+\begin{aligned}
+f(b) =& f(a) + f'(a)(b-a) + \frac{f''(a)}{2!}(b-a)^2 + \cdots \\
+&+ \frac{f^{(n)}(a)}{n!}(b-a)^n + \frac{f^{(n+1)}(c)}{(n+1)!}(b-a)^{n+1} \\
+\end{aligned}
+$$
+
+\end{tcolorbox}
+
+
+A common formula for Taylor's Theorem usually use $x$ instead of $b$,  and $R_n(x)$ to stand for the remainder term:
+$$
+\begin{aligned}
+f(x) =& f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \cdots \\
+&+ \frac{f^{(n)}(a)}{n!}(x-a)^n + R_n(x) \\
+\end{aligned}
+$$
+where
+\begin{center}
+$\displaystyle  R_n(x) = \frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1} $  \ \ \ \ for some $c$ between $a$ and $x$.
+\end{center}
+
+Furthermore,  if we let $a=0$,  the above Taylor's formula reduces to \textbf{Maclaurin series} (a special case of Taylor's series):
+$$
+f(x) = f(a) + f'(a)x + \frac{f''(a)}{2!}x^2 + \cdots + \frac{f^{(n)}(a)}{n!}x^n + R_n(x)
+$$
+
+
+
+
+
+\section {\large An intuitive Explanation and Error Estimate (Convergence)}
+
+At point $a$,  if Taylor's polynomial formula and its derivatives (infinitely) have the same value as the original function,  maybe the two functions will perform quite the same around point $a$.   I think this is the logic behind the theorem,  and now let's take a look at the remainder $R_n(x)$ and see if and under what conditions it goes to zero as $n \to \infty$,  which means the Taylor's formula would be a \say {perfect} approximation for the original function.
+
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} Lemma} If there is a positive constant $M$ such that $|f^{(n+1)(c)}| \leqslant M$ for all c between $x$ and $a$,  inclusive,  then the remainder term $R_n(x)$ in Taylor's Theorem satisfies the inequality and goes to zero as $n \to \infty$: 
+$$
+|R_n(x)| \leqslant M \frac{|x-a|^{n+1}}{(n+1)!}
+$$
+
+\end{tcolorbox}
+
+The above conclusion directly derives from the convergence of the form $\displaystyle \lim_{n \to \infty} \frac{x^n}{n!} = 0$.  So it's also true that  if we choose x carefully so that $|f^{(n+1)(c)}|$ is equal to or less than a constant,  the Taylor's formula holds for the function.
+
+
+
+
+
+\section {\large Applications of Taylor's Formula}
+
+Use Taylor's formula,  especially when we pick $a=0$,  will give us some every useful series.  
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} Frequently used Taylor series} 
+$$
+\begin{aligned}
+& \frac{1}{1-x} = 1 + x + x^2 + \cdots + x^n + \cdots = \sum ^\infty _{n=0} x^n  &,  && |x| < 1 \\
+& \frac{1}{1+x} = 1 - x + x^2 - \cdots + (-x)^n + \cdots = \sum ^\infty _{n=0} (-x)^n  &,  && |x| < 1 \\
+& e^x = 1 + x + \frac{x^2}{2!} + \cdots + \frac{x^n}{n!} + \cdots = \sum ^\infty _{n=0} \frac{x^n}{n!}  &,  && |x| < \infty \\
+& \sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots + (-1)^n \frac{x^{2n+1}}{(2n+1)!} + \cdots = \sum ^\infty _{n=0} \frac{(-1)^n x^{2n+1} }{(2n+1)!}  &,  && |x| < \infty \\
+& \cos x = x - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots + (-1)^{n} \frac{x^{2n}}{(2n)!} + \cdots = \sum ^\infty _{n=0} \frac{(-1)^n x^{2n} }{(2n)!}  &,  && |x| < \infty \\
+& \ln (1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \cdots + (-1)^{n-1} \frac{x^n}{n} + \cdots = \sum ^\infty _{n=1} \frac{(-1)^{n-1} x^n}{n} &,  && -1<x \leqslant 1 \\
+& \tan^{-1} x = x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots + (-1)^{n} \frac{x^{2n+1} } {2n+1} + \cdots = \sum ^\infty _{n=0} \frac{(-1)^n x^{2n+1} } {2n+1} &,  && |x| \leqslant 1 \\
+\end{aligned}
+$$
+\end{tcolorbox}
+
+
+
+\section{\large Proof of Taylor's Theorem}
+
+In order to approximate function $f$,  let a polynomial function $P$ be:
+$$
+P_n (x) = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \cdots + \frac{f^{(n)} (a) }{n!} (x-a)^n
+$$
+$P_n(x)$ matches function $f$ for the first n derivatives at $x=a$,  and if we construct another function $\phi (x)$ by adding the $(n+1)$th term,  the matching still holds
+$$
+\phi _n (x) = P_n (x) + K (x-a)^{n+1}
+$$
+Matching of functions $f(x)$ and $\phi _n (x)$ at $x=a$ doesn't lead to the conclusion that they also math at $x=b$.  However,  we can pick a value for $K$ to let the equation hold,
+\begin{center}
+$f(b) = \phi _n (b) = P_n(b) + K(b-a)^{n+1} $  \ \ \ \ when  \ \ \ \ $K = \frac{f(b) - P_n (b)}{(b-a)^{n+1} }$
+\end{center}
+
+As long as $a$ and $b$ are fixed,  we know $K$ would be a constant.  Now we need to construct a third function $G(x)$ to find this constant $K$ to a more precise extent: 
+\begin{equation}
+G(x) = f(x) - \phi _n (x) = f(x) - P_n (x) - K (x-a)^{n+1}  \tag{A}
+\end{equation}
+$G(x)$ actually measures the difference between the original function $f$ and the Taylor's series formula approximation,  and it has two features by its nature:
+
+(1) $G(a) = f(a) - \phi _n (a) = 0$; and $G(b) = f(b) - \phi _n (b) = 0$;
+
+(2) $G'(a) = G''(a) = \cdots = G^{(n)} (a) = 0$ \\
+
+From (1),  we know that by Rolle's Theorem,  there must be a point $c_1$ between $a$ and $b$ that $G'(c_1) = 0$,  and from (2) we can conclude that there must be a 
+\begin{center}
+$c_2$ in $(a, c_1)$ such that $G^{(2)} (c_2) = 0$,  \\
+$c_3$ in $(a,c_2)$ such that $G^{(3)} (c_3) = 0$,  \\
+$ \vdots $ \\
+$c_{n+1}$ in $(a, c_n)$ such that $G^{(n+1)}(c_{n+1} ) = 0$ 
+\end{center}
+
+We know that the $(n+1)$th derivative of $\phi_n(x)$ is 
+$$ \phi _n ^{(n+1)} (c_{n+1} ) = P_n ^{(n+1)} (x) + K \cdot (n+1)! = K \cdot (n+1)!$$
+and by Eq. (A) we have
+$$
+G^{(n+1)}(c_{n+1} ) = 0 = f^{(n+1)} (c_{n+1}) - K \cdot (n+1)! 
+$$
+$$ K = \frac{f^{(n+1)} (c_{n+1})} {(n+1)!} $$
+
+
+
+
+
+
+
+%++++++++++++++++++++++++++++++++++++++++
+
+
+\printbibliography [title={Reference}]
+
+
+%***********************************
+
+\end{document}

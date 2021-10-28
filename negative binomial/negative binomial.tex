@@ -1,0 +1,368 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in, a4paper]{geometry}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{setspace}  % set spacing
+
+\setstretch{1.25}  %stretch line space to multiple x
+
+\usepackage[dvipsnames,table, xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
+\usepackage{shadowtext}
+
+\usepackage{indentfirst} % indent the first paragraph of each section
+
+\usepackage{float} %determine the position of figures in the document
+
+\usepackage{tabularx} % extra features for tabular environment
+
+\usepackage{amsmath, amsfonts, amssymb}  % improve math presentation
+\allowdisplaybreaks
+
+\usepackage{blkarray, bigstrut}
+
+\usepackage{makecell}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+\usepackage{graphicx} % takes care of graphic including machinery
+
+\graphicspath{ {../../logos/} }
+
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+\usepackage{caption}
+
+\usepackage{subcaption}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+
+\usepackage{lipsum,lmodern}
+
+\usepackage[most]{tcolorbox}
+
+\usetikzlibrary{trees}  %add binary trees
+
+\usetikzlibrary {positioning}
+
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+
+\usepackage{blindtext}
+
+\usepackage{dirtytalk} %quotation marks
+
+
+%********************************
+
+%Bibliography
+
+\usepackage[backend=biber,  style=alphabetic,  sorting=ynt]{biblatex}
+
+\addbibresource{../../Mybib.bib}
+
+
+%********************************
+
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+
+\fancyhf{}
+
+\lhead{\footnotesize {Math notes: Negative Binomial} }
+\rhead{\footnotesize { } }
+\cfoot{- \thepage \ -}
+
+\title{\vspace{-90pt} 
+
+
+%**************************************************
+
+% Title Part
+\textbf  {Peer-graded Assignment} }
+\author{Cui, Xiaolong(Larry)}
+\date{\today}
+
+
+%*************************************************
+
+\begin{document}
+
+%\maketitle
+
+\thispagestyle{plain}
+
+%*************************************************
+
+\begin{figure}[H] %[!tbp]
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{uol}
+    %\caption{Flower one.}
+    %\label{fig:f1}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{goldsmiths}
+    %\caption{Flower two.}
+    %\label{fig:f2}
+  \end{subfigure}
+  %\caption{My flowers.}
+\end{figure}
+
+%****************************************************
+
+\begin{flushright}
+
+\footnotesize {Sept. 29th,  2021}
+\end{flushright}
+
+\begin{center}
+\textbf{The Negative Binomial Dsitribution} \\
+\footnotesize {Study Notes $ | $ Written by Larry Cui}
+\end{center}
+
+%***************************************************
+
+%\begin{abstract}
+%\end{abstract}
+
+
+%***************************************************
+
+\setcounter{figure}{0}
+
+\vspace{10pt}
+
+
+Follow the logic of geometric distribution,  if we want to study the probability of $r^{th}$ success in $k^{th}$ of a series of trials,  it must be the case that $(r-1)$ success occur during the first $(k-1)$ trials and the $r^{th}$ happens on exactly the $k^{th}$ trial. 
+
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} Negative Binomial Distribution pdf} 
+\[ 
+p_X (k) = \binom {k-1}{r-1} p^r (1-p)^{k-r} ,  \qquad k = r, r+1,  \dots
+\]
+
+\end{tcolorbox}
+
+If we let $X$ be the sum of independent variables $X_1,  X_2,   \dots,   X_r$,  and let $X \to \infty$,  the negative binomial can be interpreted as $r$ successes happen one after another,  and each of which follows the geometric distribution model.  This perspective won't give us a better form to the pdf,  but will greatly simplify the calculation of expected values. 
+
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} E(X), Var(X) and mgf} \qquad Let $ \displaystyle p_X (k) = \binom {k-1}{r-1} p^r (1-p)^{k-r},  \quad k=r, r+1, \dots$ Then 
+\quote {
+a.  $\displaystyle M_X (t) = M_{X_1}(t) M_{X_2}(t) \dots M_{X_r}(t) = \left[ \frac {pe^t}{1-(1-p)e^t} \right]^r $ \\
+b.  $\displaystyle E(X) = E(X_1) + E(X_2) + \cdots + E(X_r) = \frac{r}{p} $ \\
+c.  $\displaystyle Var(X) = Var(X_1) + Var(X_2) + \cdots + Var(X_r) = \frac{r(1-p)}{p^2}$
+}
+
+\end{tcolorbox}
+
+
+
+
+\section*{\normalsize Algebraic Approach: the sum of pdf}
+
+There's an algebraic approach to the $E(X)$ and Var$(X)$, which centres around the verification of the pdf of the function.  Let's take a look at the following lemma:
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} lemma (a)} 
+\[ 
+\binom {k+m}{m} = \binom {k+m-1}{m} + \binom {k+m-1}{m-1}
+\]
+
+\end{tcolorbox}
+
+\textbf{Proof:} a simple expansion of the combinations gives us result.  Furthermore,  we can also see this equation by some intuition: if you want pick $m$ items from $k+m$ pool,  you can first split the pool into one item and the other.  The final pick consists of two scenarios: 1) excluding this one item: $\displaystyle \binom {k+m-1}{m}$; and 2) including this one item: $\displaystyle \binom {k+m-1}{m-1}$. 
+\[
+\begin{aligned}
+\binom {k+m-1}{m} + \binom {k+m-1}{m-1} 
+	&= \frac{(k+m-1)!}{m! (k-1)!} + \frac{(k+m-1)!}{(m-1)! k!} \\
+	&= \frac{(k+m-1)! k + (k+m-1)! m}{m! k!} \\
+	&= \frac{(k+m)!}{m!k!}
+\end{aligned}
+\]
+
+\textbf{Intermediate function:} consider the function
+\[
+f_m(z) = \sum _{k=0} ^\infty \binom {k+m}{m} z^k
+\]
+Use lemma (a),  we can expand it as
+\[
+f_m(z) = \sum _{k=0} ^\infty \binom {k+m-1}{m-1} z^k + \sum _{k=0} ^\infty \binom {k+m-1}{m} z^k
+\]
+Because  $\displaystyle \binom {m-1}{m} = \frac{(m-1)(m-2) \cdots (m-m)}{m! (-1)!} = 0 $ by definition,  we can discard the $k=0$ item from the second term.  A little re-arrangement give the following form for the second term:
+\[
+\sum _{k=1} ^\infty \binom {k+m-1}{m} z^k = z \sum _{k=1} ^\infty \binom {k+m-1}{m} z^{k-1} = z f_m(z) 
+\]
+so
+\[
+f_m(z) = f_{m-1}(z) + z f_m(z) \quad \Rightarrow \quad f_m(z) = \frac{f_{m-1} (z)}{1-z}
+\]
+But since $\displaystyle f_0 (z) = \sum ^\infty _{k=0} \binom {k}{0} z^k = \frac{1}{1-z}$ ,  we know $\displaystyle f_m(z) = \frac{1}{(1-z)^{m+1} } $.\\
+
+
+To verify the sum of the pdf equals to 1,  we use the above function to get (here we let $m=r-1,  k'=k-r$):
+\begin{equation}
+\begin{aligned}[t] 
+\sum _{k=r} ^\infty \binom {k-1}{r-1} p^r (1-p)^{k-r} 
+	&= p^r \cdot  \sum _{k'=0} ^\infty \binom {k' + m}{m}  (1-p)^{k'} \\
+	&= p^r \cdot f_m (1-p) \\
+	&= p^r \cdot \frac{1}{(1-1+p)^r} = 1 & \color{RoyalBlue} \text{\footnotesize Remark: } r=m+1 \\
+\end{aligned}
+\end{equation}
+
+
+
+Now we can go on with $E(X)$:
+\begin{equation}
+\begin{aligned}[t]
+E(X) 
+	&= \sum _{k=r} ^\infty \binom {k-1}{r-1} k p^r (1-p)^{k-r} \\
+	&= p^r \cdot  \sum _{k'=0} ^\infty (k'+r)  \binom {k' + m}{m}  (1-p)^{k'}   \\
+	&=  p^r \cdot  \sum _{k'=0} ^\infty r  \binom {k' + r}{r}  (1-p)^{k'} && \color{RoyalBlue}  \text{\footnotesize Remark: } m=r-1\\
+	&= r p^r \cdot \frac{1}{(1-1+p)^{r+1} } = \frac{r}{p}  \\
+\end{aligned}
+\end{equation}
+
+
+In order to find Var$(X)$,  we need a little trick here: find $E[X (X+1)]$ first.  As above,  we start by lay out the formula:
+\[
+\begin{aligned}
+E[X(X+1)] 
+	&= \sum _{k=r} ^\infty k(k+1) \binom {k-1}{r-1}  p^r (1-p)^{k-r} \\
+	&= p^r \cdot  \sum _{k'=0} ^\infty (k'+r+1)(k' + r)  \binom {k' + m}{m}  (1-p)^{k'}  && \color{RoyalBlue}  \text{\footnotesize Remark: } k=k'+r\\
+	&=  p^r \cdot  \sum _{k'=0} ^\infty (k'+r+1)(k' + r)  \binom {k' + r -1}{r-1}  (1-p)^{k'}  && \color{RoyalBlue}  \text{\footnotesize Remark: } m=r-1 \\
+	&= r (r+1) p^r   \cdot  \sum _{k'=0} ^\infty  \binom {k' + r +1}{r+1}  (1-p)^{k'}  \\
+	&= r (r+1) p^r \cdot \frac{1}{(1-1+p)^{r+2} } \\
+	&= \frac{r(r+1)}{p^2} \\
+\end{aligned}
+\]
+so we have
+\[
+\text{Var}(X) = E[X(X+1)] - E(X)^2 - E(X)= \frac{r(r+1)}{p^2} - \frac{r^2}{p^2} - \frac{r}{p}=\frac{r(1-p)}{p^2}
+\]
+
+
+\textbf{A second way:}
+
+We can also find the solution to Equation (1) without having recourse to intermediate function $f_m(z)$.  First of all,  we re-arrange the expected value formula as:
+\[
+\begin{aligned}
+E(X) 
+	&= \sum _{k=r} ^\infty \binom {k-1}{r-1} k p^r (1-p)^{k-r} \\
+	&= p^r \cdot  \sum _{k'=0} ^\infty (k'+r)  \binom {k' + r-1}{r-1}  (1-p)^{k'} && \color{RoyalBlue}  \text{\footnotesize Remark: } k'=k-r\\
+	&= r p^r \cdot \sum _{k'=0} ^\infty  \binom {k' + (r+1) -1}{k'}  (1-p)^{k'} \\
+	&= r p^r \cdot \sum _{k'=0} ^\infty  \binom {k' + (r+1) -1}{k'}  (-1)^{k'} (p-1)^{k'} \\
+\end{aligned}
+\]
+
+
+We need Taylor/Maclaurin series for help here.  Recall
+
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} The Maclaurin series for $f(x)$}  
+
+wherever it converges, can be expressed as: 
+\[ 
+f(x) = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 + \frac{f^{(3)} (0)}{3!}x^3 + \cdots +  \frac{f^{(k)} (0)}{k!}x^k + \cdots
+\]
+
+and for $f(x) = 1/(1+x)^n$: 
+\[
+\frac{1}{(1+x)^n} = 1 - nx + \frac{(-n)(-n-1)}{2!} x^2 + \cdots = \sum _{k=0} ^\infty \binom {n+k-1} {k} (-1)^k x^k
+\]
+
+
+\end{tcolorbox}
+
+
+We can see that the last part of $E(X)$ is exactly the sum of Maclaurin series with $n=r+1$ and $x=p-1$,  so
+\[
+E(X) = r p^r \cdot \frac{1}{(1 + p -1)^{r+1}} = \frac{r}{p} \\
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+%++++++++++++++++++++++++++++++++++++++++
+
+\clearpage
+
+\printbibliography [title={Reference}]
+
+
+%***********************************
+
+\end{document}

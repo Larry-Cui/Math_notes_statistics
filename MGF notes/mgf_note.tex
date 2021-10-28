@@ -1,0 +1,278 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1.2in, a4paper]{geometry}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{setspace}  % set spacing
+
+\setstretch{1.25}  %stretch line space to multiple x
+
+\usepackage[dvipsnames,table, xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
+\usepackage{shadowtext}
+
+\usepackage{indentfirst} % indent the first paragraph of each section
+
+\usepackage{float} %determine the position of figures in the document
+
+\usepackage{tabularx} % extra features for tabular environment
+
+\usepackage{amsmath, amsfonts, amssymb}  % improve math presentation
+
+\usepackage{blkarray, bigstrut}
+
+\usepackage{makecell}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\usepackage{graphicx} % takes care of graphic including machinery
+\graphicspath{ {./logos/} }
+
+\usepackage{caption}
+
+\usepackage{subcaption}
+
+\usepackage{tikz}
+
+\usepackage{lipsum,lmodern}
+
+\usepackage[most]{tcolorbox}
+
+\usetikzlibrary{trees}  %add binary trees
+
+\usetikzlibrary {positioning}
+
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+
+\usepackage{blindtext}
+
+\usepackage{dirtytalk} %quotation marks
+
+
+%********************************
+
+%Bibliography
+
+\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
+
+\addbibresource{../../Mybib.bib}
+
+
+%********************************
+
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+
+\fancyhf{}
+
+\lhead{\footnotesize {Mathematical Statistics} }
+\rhead{\footnotesize { } }
+\cfoot{- \thepage \ -}
+
+\title{\vspace{-90pt} 
+
+
+%**************************************************
+
+% Title Part
+\textbf  {Peer-graded Assignment} }
+\author{Cui, Xiaolong(Larry)}
+\date{\today}
+
+
+%*************************************************
+
+\begin{document}
+
+%\maketitle
+
+\thispagestyle{plain}
+
+%*************************************************
+
+\begin{figure}[H] %[!tbp]
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{uol}
+    %\caption{Flower one.}
+    %\label{fig:f1}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{goldsmiths}
+    %\caption{Flower two.}
+    %\label{fig:f2}
+  \end{subfigure}
+  %\caption{My flowers.}
+\end{figure}
+
+%****************************************************
+
+\begin{flushright}
+
+\footnotesize {June 25, 2021}
+\end{flushright}
+
+\begin{center}
+\textbf{Reading Notes: Moment Generating Function} \\
+\footnotesize {Written by Larry Cui}
+\end{center}
+
+%***************************************************
+
+%\begin{abstract}
+%A lot of textbooks on mathematical statistics for undergraduate students simply give the equations of the approximations for binomial distribution,  i.e.,  especially when it comes to the \textit{normal distribution}.  However,  a little dig into the equations would help learners better understand the logic behind these equations and grasp them on a more profound basis.  This is the motivation for this notes.
+%\end{abstract}
+
+
+%***************************************************
+
+\setcounter{figure}{0}
+
+\vspace{10pt}
+
+By definition,  \textit{moment generating function} ($M_x (t)$) takes the form as follows:
+
+
+\begin{tcolorbox} [colback=blue!5!white,  colframe=blue!75!black,  title= {\textbf{Definition} }]
+
+$$ M_x (t) = E( \mathsf{e} ^{tx} ) \text{ ,  and} $$
+$$ \text {for discrete variable $x$: }  E( \mathsf{e} ^{tx} ) = \sum_{k} \mathsf{e}^{tx}p_x (k) $$
+$$ \text {for continuous variable $x$: } E( \mathsf{e} ^{tx} ) = \int_{-\infty}^{\infty}  \mathsf{e}^{tx}f_x (x)dx $$
+
+\end{tcolorbox}
+
+
+
+The first application of the \textit{mgf} is to find \say {moments}:
+
+\begin{tcolorbox} [colback=blue!5!white,  colframe=blue!75!black,  title= {\textbf{Theorem 1} }]
+
+$$ M_x ^{(r)} (t) = E( X^{r} ) \text{ ,  when $t=0$} $$
+
+\end{tcolorbox}
+
+\textbf{Proof}:
+
+For $r=1 \text{,  } 
+\begin{aligned}[t]
+M_x^{(1)} (t)  
+    &= \frac{d}{dt} \int_{-\infty}^{\infty}  \mathsf{e}^{tx}f_x (x)dx\\
+    &=\int_{-\infty}^{\infty} \frac{d}{dt}  \mathsf{e}^{tx}f_x (x)dx\\
+    &=\int_{-\infty}^{\infty} x  \mathsf{e}^{tx}f_x (x)dx\\
+    \end{aligned}\\
+$
+\\
+
+For $r=2 \text{,  } 
+\begin{aligned}[t]
+M_x^{(2)} (t)  
+    &= \frac{d^2}{dt^2} \int_{-\infty}^{\infty}  \mathsf{e}^{tx}f_x (x)dx\\
+    &=\int_{-\infty}^{\infty} \frac{d^2}{dt^2}  \mathsf{e}^{tx}f_x (x)dx\\
+    &=\int_{-\infty}^{\infty} x^2  \mathsf{e}^{tx}f_x (x)dx\\
+    \end{aligned}\\
+$
+
+Let $t=0$,  the above equation equals to $M_x ^{(1)} (0)= {\displaystyle \int_{-\infty}^{\infty} x  \mathsf{e}^{0x}f_x (x)dx} = E (X)$,  and $M_x ^{(2)} (0)= {\displaystyle \int_{-\infty}^{\infty} x^2  \mathsf{e}^{0x}f_x (x)dx} = E(X^2)$,  respectively.
+\\
+
+Theorem 1 can also be interpreted directly from  \textit{mgf}'s definition.  If we use Taylor Series to expand the $ \mathsf{e}^{tx}$,  and evaluate superscript x at 0, we get:
+$$
+\begin{aligned}[t]
+M_x (t) = E(\mathsf{e}^{tx})
+	&= E( \mathsf{e}^{tx}x^0 + \frac{t \mathsf{e}^{tx}}{1!} x^1 + \frac{t^2 \mathsf{e}^{tx}}{2!} x^2 + \frac{t^3 \mathsf{e}^{tx}}{3!} x^3 + \cdots )\\
+	&= E( \mathsf{e}^{0}x^0 + \frac{t \mathsf{e}^{0}}{1!} x^1 + \frac{t^2 \mathsf{e}^{0}}{2!} x^2 + \frac{t^3 \mathsf{e}^{0}}{3!} x^3 + \cdots )\\
+	&= E(1) + \frac{t}{1!} E(x^1) + \frac{t^2} {2!} E( x^2) + \frac{t^3}{3!} E( x^3) + \cdots \\
+\end{aligned}\\
+$$ 
+
+Obviously,  $M_x ^{(r)} (t) = E (x^r) + {\displaystyle \frac{t}{1!} E(x^{r+1}) } +{\displaystyle \frac{t^2} {2!} E( x^{r+2}) } + {\displaystyle \frac{t^3}{3!} E( x^{r+3}) } + \cdots $.  If we let $t=0$,  we reach the equation easily at $M_x ^{(r)} (0) = E (x^r) $,  for the rest parts reduce to $0$. \\
+
+
+\begin{tcolorbox} [colback=blue!5!white,  colframe=blue!75!black,  title= {\textbf{Theorem 2} }]
+
+\hspace{10pt} Suppose that $W_1$ and $W_2$ are random variables for which $M_{w_1} (t) = M_{w_2} (t)$ for some interval of t's containing 0. Then $f_{w_1} (w) = f_{w_2} (t)$. 
+
+\end{tcolorbox}
+
+
+The proof of Theorem 2 requires further knowledge on characteristic functions,  so I will come back to this issue later.\\
+
+
+\begin{tcolorbox} [colback=blue!5!white,  colframe=blue!75!black,  title= {\textbf{Theorem 3a} }]
+
+\hspace{10pt} Let $W$ be a random variable with moment generating function $M_w (t)$.  Let $V=aW + b$.  Then, 
+$$ M_v (t) = \mathsf{e}^{bt} M_w (at) $$
+
+\end{tcolorbox}
+
+\textbf{Proof}:
+
+We presume here the variable $W$ is continuous and the proof is as follows (for discrete variables,  the underlying logic is the same):
+
+$$
+\begin{aligned}[t]
+M_v (t) 
+	&= \int_{-\infty} ^{\infty} \mathsf{e}^{tV} f(w)dw \\
+	&= \int_{-\infty} ^{\infty} \mathsf{e}^{t(aW + b)} f(w)dw \\
+	&= \mathsf{e}^{bt} \int_{-\infty} ^{\infty} \mathsf{e}^{atW} f(w)dw \\
+	&= \mathsf{e}^{bt} M_w (at) \\
+\end{aligned}\\
+$$
+
+
+\begin{tcolorbox} [colback=blue!5!white,  colframe=blue!75!black,  title= {\textbf{Theorem 3b} }]
+
+\hspace{10pt} Let $W_1,  W_2,  \dots ,  W_n$ be independent random variables,  and $W = W_1 + W_2 + \cdots + W_n$,  then: 
+$$
+M_w (t) = M_{w_1} (t) \cdot M_{w_2} (t) \cdots M_{w_n} (t) 
+$$
+\end{tcolorbox}
+
+
+\textbf{Proof}:
+
+We only need to prove the situation of $W=X+Y$,  based on which three or more terms can easily be proved by induction.  We know from the definition that $M_w (t) = E(\mathsf{e}^{tw} ) $,  since w is the sum of x and y,  we have $M_w (t) = E(\mathsf{e}^{t(x+y)})$.  
+
+$f(w)$ takes the value when $X=x$,  and $Y=y$,  i.e.,  $f(w) = f(X=x,  Y=y)$,  but the condition \textit{independent} tells us that $f(X=x,  Y=y) = f(x)f(y)$.  As a result, 
+$$
+\begin{aligned}[t]
+E(\mathsf{e}^{t(x+y)})
+	&= \int \mathsf{e}^{t(x+y)}f(w)dw \\
+	&= \int \int \mathsf{e}^{t(x+ y)} f(x)f(y)dxdy \\
+	&= \int \mathsf{e}^{tx} f(x)dx \cdot \int \mathsf{e}^{ty} f(y)dy\\
+	&= M_x (t) \cdot M_y (t) && {\text{(Proved!)} }\\
+\end{aligned}\\
+$$
+
+
+
+
+
+\vspace{20pt}
+
+
+
+
+%++++++++++++++++++++++++++++++++++++++++
+
+
+\printbibliography[title={Reference}]
+
+
+%***********************************
+
+\end{document}

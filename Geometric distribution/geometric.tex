@@ -1,0 +1,269 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in, a4paper]{geometry}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{setspace}  % set spacing
+
+\setstretch{1.25}  %stretch line space to multiple x
+
+\usepackage[dvipsnames,table, xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
+\usepackage{shadowtext}
+
+\usepackage{indentfirst} % indent the first paragraph of each section
+
+\usepackage{float} %determine the position of figures in the document
+
+\usepackage{tabularx} % extra features for tabular environment
+
+\usepackage{amsmath, amsfonts, amssymb}  % improve math presentation
+
+\usepackage{blkarray, bigstrut}
+
+\usepackage{makecell}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+\usepackage{graphicx} % takes care of graphic including machinery
+
+\graphicspath{ {../../logos/} }
+
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+\usepackage{caption}
+
+\usepackage{subcaption}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+
+\usepackage{lipsum,lmodern}
+
+\usepackage[most]{tcolorbox}
+
+\usetikzlibrary{trees}  %add binary trees
+
+\usetikzlibrary {positioning}
+
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+
+\usepackage{blindtext}
+
+\usepackage{dirtytalk} %quotation marks
+
+
+%********************************
+
+%Bibliography
+
+\usepackage[backend=biber,  style=alphabetic,  sorting=ynt]{biblatex}
+
+\addbibresource{../../Mybib.bib}
+
+
+%********************************
+
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+
+\fancyhf{}
+
+\lhead{\footnotesize {Math notes: Geometric Distribution} }
+\rhead{\footnotesize { } }
+\cfoot{- \thepage \ -}
+
+\title{\vspace{-90pt} 
+
+
+%**************************************************
+
+% Title Part
+\textbf  {Peer-graded Assignment} }
+\author{Cui, Xiaolong(Larry)}
+\date{\today}
+
+
+%*************************************************
+
+\begin{document}
+
+%\maketitle
+
+\thispagestyle{plain}
+
+%*************************************************
+
+\begin{figure}[H] %[!tbp]
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{uol}
+    %\caption{Flower one.}
+    %\label{fig:f1}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{goldsmiths}
+    %\caption{Flower two.}
+    %\label{fig:f2}
+  \end{subfigure}
+  %\caption{My flowers.}
+\end{figure}
+
+%****************************************************
+
+\begin{flushright}
+
+\footnotesize {Sept. 28th,  2021}
+\end{flushright}
+
+\begin{center}
+\textbf{The Geometric Distribution} \\
+\footnotesize {Study Notes $ | $ Written by Larry Cui}
+\end{center}
+
+%***************************************************
+
+%\begin{abstract}
+%\end{abstract}
+
+
+%***************************************************
+
+\setcounter{figure}{0}
+
+\vspace{10pt}
+
+
+Consider a series of independent trials and each has one of two outcomes,  success or failure.  If $p$ is the probability of success,  the geometric distribution means the probability at which the first success occurs.  Obviously,  a formula for the pdf of this distribution is:
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} Geometric Distribution pdf} 
+\[ 
+p_X (k) = (1-p)^{k-1} p ,  \qquad k = 1, 2,  \dots
+\]
+
+\end{tcolorbox}
+
+
+
+\section{\normalsize cdf of the geometric distribution:}
+\[
+\begin{aligned}
+F_X(t) = P(X \leqslant t) 
+	&= \sum _{k=1} ^t (1-p)^{k-1} p \\
+	&= p \sum _{k=1} ^t (1-p)^{k-1} \\
+	&= p \cdot \frac{1 - (1-p)^t}{1 - (1-p)} \\
+	&= 1- (1-p)^t \\
+\end{aligned}
+\]
+
+
+
+\section{\normalsize $E(X)$ of the geometric distribution:}
+\[
+\begin{aligned}
+E(X) 
+	&= \sum _{k=1} ^\infty k \cdot (1-p)^{k-1} p \\
+	&= p \sum _{k=1} ^\infty k \cdot (1-p)^{k-1} \\
+\end{aligned}
+\]
+
+Now take a look at the sum part,  we can tell it's the derivative of another series:
+$$
+\left[ \sum _{k=1} ^\infty - (1-p)^k \right] ' =  \sum _{k=1} ^\infty k \cdot (1-p)^{k-1}
+$$
+But the closed form of the formula within the brackets is $\displaystyle \frac{p-1}{p}$,  so
+$$
+ \sum _{k=1} ^\infty k \cdot (1-p)^{k-1} = \left( \frac{p-1}{p} \right)' = \frac{1}{p^2}
+$$
+and 
+$$ E(X) = p \cdot \frac{1}{p^2} = \frac{1}{p} $$
+
+
+\section{\normalsize Var$(X)$ of the geometric distribution: }
+
+The key step to find variance is to find $E(X^2)$.  By the same technique,  we have
+\[
+\begin{aligned}
+\left[ \sum _{k=1} ^\infty (1-p)^{k+1} \right]'' 
+	&= \sum _{k=1} ^\infty (k+1)k \cdot (1-p)^{k-1} p \\
+	&= \sum _{k=1} ^\infty k^2 \cdot (1-p)^{k-1} + k \cdot (1-p)^{k-1} \\
+\end{aligned}
+\]
+The second term on the right side of the equation is $\displaystyle \frac{1}{p^2}$,  and we can also use a closed form to represent the left side,  so the  equation becomes
+\[
+\begin{aligned}
+\left[ \frac{(1-p)^2}{p} \right]'' 
+	&= \sum _{k=1} ^\infty k^2 \cdot (1-p)^{k-1} + \frac{1}{p^2} \\
+\frac{2}{p^3}
+	&= \sum _{k=1} ^\infty k^2 \cdot (1-p)^{k-1} + \frac{1}{p^2} \\
+\end{aligned}
+\]
+so
+\[
+E(X^2) = p \sum _{k=1} ^\infty k^2 \cdot (1-p)^{k-1} = p \cdot \left( \frac{2}{p^3} - \frac{1}{p^2} \right) = \frac{2-p}{p^2} 
+\]
+and
+\[
+Var{X} = E(X^2) - E(X)^2 = \frac{2-p}{p^2}  - \frac{1}{p^2} = \frac{1-p}{p^2}
+\]
+
+
+\section{\normalsize \textit{mgf} of the geometric distribution: }
+By definition,  the moment generating function of a distribution function is the expected value of $e^{tx}$:
+\[
+\begin{aligned}
+M_k(t) = E(e^{tk}) 
+	&= \sum _{k=1} ^\infty e^{tk} \cdot (1-p)^{k-1} p \\
+	&= \frac{p}{1-p}  \sum _{k=1} ^\infty e^{tk} \cdot (1-p)^k \\ 
+	&=  \frac{p}{1-p} \cdot \frac{e^t (1-p)}{1- e^t (1-p)} \\
+M_k(t)	&= \frac {pe^t}{1- (1-p)e^t } \\
+\end{aligned}
+\] 
+
+
+
+
+
+
+
+%++++++++++++++++++++++++++++++++++++++++
+
+\clearpage
+
+\printbibliography [title={Reference}]
+
+
+%***********************************
+
+\end{document}

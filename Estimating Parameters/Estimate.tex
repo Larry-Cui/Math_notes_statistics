@@ -1,0 +1,428 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in, a4paper]{geometry}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{setspace}  % set spacing
+
+\setstretch{1.25}  %stretch line space to multiple x
+
+\usepackage[dvipsnames,table, xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
+\usepackage{shadowtext}
+
+\usepackage{indentfirst} % indent the first paragraph of each section
+
+\usepackage{float} %determine the position of figures in the document
+
+\usepackage{tabularx} % extra features for tabular environment
+
+\usepackage{amsmath, amsfonts, amssymb}  % improve math presentation
+\allowdisplaybreaks
+
+\def\Var{{\textrm{Var}}\,}
+\def\E{{\textrm{E}}\,}
+\def\Cov{{\textrm{Cov}}\,}
+
+\usepackage[italicdiff]{physics}
+
+\usepackage{blkarray, bigstrut}
+
+\usepackage{makecell}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+\usepackage{graphicx} % takes care of graphic including machinery
+
+\graphicspath{ {../../logos/} }
+
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+\usepackage{caption}
+
+\usepackage{subcaption}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+
+\usepackage{lipsum,lmodern}
+
+\usepackage[most]{tcolorbox}
+
+\usetikzlibrary{trees}  %add binary trees
+
+\usetikzlibrary {positioning}
+
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+
+\usepackage{blindtext}
+
+\usepackage{dirtytalk} %quotation marks
+
+
+%********************************
+
+%Bibliography
+
+\usepackage[backend=biber,  style=alphabetic,  sorting=ynt]{biblatex}
+
+\addbibresource{../../Mybib.bib}
+
+
+%********************************
+
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+
+\fancyhf{}
+
+\lhead{\footnotesize {Math notes: Estimating Parameters} }
+\rhead{\footnotesize { } }
+\cfoot{- \thepage \ -}
+
+\title{\vspace{-90pt} 
+
+
+%**************************************************
+
+% Title Part
+\textbf  {Peer-graded Assignment} }
+\author{Cui, Xiaolong(Larry)}
+\date{\today}
+
+
+%*************************************************
+
+\begin{document}
+
+%\maketitle
+
+\thispagestyle{plain}
+
+%*************************************************
+
+\begin{figure}[H] %[!tbp]
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{uol}
+    %\caption{Flower one.}
+    %\label{fig:f1}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{goldsmiths}
+    %\caption{Flower two.}
+    %\label{fig:f2}
+  \end{subfigure}
+  %\caption{My flowers.}
+\end{figure}
+
+%****************************************************
+
+\begin{flushright}
+\footnotesize {Oct. 10\textsuperscript{th} 2021}
+\end{flushright}
+
+\begin{center}
+\textbf{Estimating Parameters: \\
+Maximum Likelihood and Moments} \\
+\footnotesize {Study Notes $ | $ Written by Larry Cui}
+\end{center}
+
+%***************************************************
+
+%\begin{abstract}
+%\end{abstract}
+
+
+%***************************************************
+
+\setcounter{figure}{0}
+
+\vspace{10pt}
+
+
+If a phenomenon is likely to be described by a kind of distribution function,  we might want to know the best parameters for the function.  There're two ways to estimate the parameters based on a collection of samples,  the method of maximum likelihood and the method of moments. 
+
+
+\section{\normalsize The Method of Maximum Likelihood}
+
+This method relies on an assumption.  When we times together all probabilities of the items in a sample of size $n$,  we get the product of those probabilities as a function of unknown parameter(s).   The assumption is that the sample is best reflecting the population distribution,  thus what we get in the sample comes with the most likelihood in the population.  So this method is to find the parameter(s) that will give the maximum value of the product function. 
+
+
+\subsection{\small First Derivative Test for Single}
+
+As a convention,  we use $L$ to denote the product of probabilities,  and if there's only one unknown parameter,  the task becomes finding the parameter when the first derivative of $L$ or $\ln L$ equals to 0.  
+
+\textbf{Example (1): } estimate $\lambda$ of a Poisson distribution if a size of $n$ sample is given.
+
+We know a Poisson distribution is $p_X(k) = e^{\lambda} \lambda ^k / k!,  \,  k=0, 1,2,\dots$,  so
+\[
+\begin{array}{c}
+L(\lambda) =\displaystyle \prod _{i=1} ^n e^{-\lambda} \frac{\lambda^{k_i} }{k_i !} = e^{-n \lambda} \lambda ^{\sum _{i=1} ^n k_i} \frac{1}{\prod _{i=1} ^n k_i !}  \\
+\\
+\displaystyle \ln L(\lambda) = -n \lambda + \left( \sum _{i=1} ^n k_i \right) \ln \lambda - \ln \prod _{i=1} ^n k_i ! \\
+\end{array}
+\]
+and 
+\[
+\frac{d \, \ln L(\lambda)}{d\lambda} = -n +  \sum _{i=1} ^n k_i  / \lambda
+\]
+If we use $\overline{k}$ to denote $\displaystyle \sum _{i=1} ^n k_i  / n$,  then $\lambda = \overline{k}$ when the above first derivative equals 0.
+
+
+\subsection{\small Partial Derivative Test for Double or More}
+
+If there're two or more unknown parameters,  it is simply a task of finding local extremes by partial first derivative for all unknown variables. 
+
+\textbf{Example (2):} suppose a random sample of size $n$ is drawn,  find $\mu$ and $\sigma ^2$ of a normal pdf.
+
+We start by finding $L$ and $\ln L$:
+\[
+\begin{aligned}
+L(\mu, \sigma^2) 
+	&= \prod _{i=1} ^n \frac{1}{\sqrt{2 \pi} \sigma} \exp \left[-\frac{1}{2} \frac{(y_i - \mu)^2}{\sigma^2} \right] \\
+	&= (2 \pi \sigma^2 )^{-n/2} \exp \left[-\frac{1}{2 \sigma^2} \sum _{i=1} ^n (y_i - \mu)^2 \right] 
+\end{aligned}
+\]
+and
+\[
+\ln L(\mu, \sigma^2) = -\frac{n}{2} \ln (2 \pi \sigma^2) - \frac{1}{2 \sigma^2} \sum _{i=1} ^n (y_i - \mu)^2 
+\]
+
+Now we can differentiate with $\mu$ and $\sigma$ respectively:
+\[
+\pdv {\ln L(\mu, \sigma^2)}{\mu} = \frac{1}{\sigma^2} \sum _{i=1} ^n (y_i - \mu)
+\]
+and
+\[
+\pdv {\ln L(\mu, \sigma^2)}{\sigma^2} = - \frac{n}{2\sigma^2} + \frac{1}{2\sigma^4} \sum _{i=1} ^n (y_i - \mu)^2 
+\]
+
+A local maximum is where both partial derivatives are zero,  so the next task is to find $\mu$ and $\sigma$ from below two equations:
+
+\[ 
+\left\{
+\begin{array}{ll}
+    \displaystyle   \frac{1}{\sigma^2} \sum _{i=1} ^n (y_i - \mu) = 0 \quad \ {\color{RoyalBlue} \to} \quad  \sum _{i=1} ^n (y_i - \mu) = 0 \quad {\color{RoyalBlue} \to} \quad  \sum _{i=1} ^n y_i - n\mu = 0 \\
+    \hspace{5pt} \\
+    \displaystyle- \frac{n}{2\sigma^2} + \frac{1}{2\sigma^4} \sum _{i=1} ^n (y_i - \mu)^2 = 0 \quad \ {\color{RoyalBlue} \to} \quad  - n \sigma^2 + \sum _{i=1} ^n (y_i - \mu)^2 = 0  \\
+\end{array} 
+\right. 
+\]
+
+so we have:
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} Estimator for Normal Distribution} \quad Given a sample of size n,  estimated $\mu$ and $\sigma^2$:
+\[ 
+\mu = \frac{1}{n} \sum _{i=1} ^n y_i = \overline{y} \quad \text{and} \quad \sigma^2 =  \frac{1}{n} \sum _{i=1} ^n (y_i - \overline{y} )^2 
+\]
+
+\end{tcolorbox}
+
+
+
+
+
+\subsection{\small When the Derivative Test Fails}
+Sometimes the derivative test just fails to produce the result for parameters,  when a close observation on order statistics technique kicks in.  
+
+\textbf{Example (3):} a size of $n$ sample is obtained for a pdf $f_Y (y; \theta) = e ^{-(y-\theta)},  y\geqslant \theta$,  find $\theta$.
+
+From the information above,  we have
+\[
+L(\theta) = \prod _{i=1} ^n e^{-(y-\theta)} = \exp \left[ - \sum _{i=1} ^n y_i + n\theta \right]
+\]
+and
+\[
+\ln L(\theta) = - \sum _{i=1} ^n y_i + n\theta
+\]
+But when we differentiate $\ln L(\theta)$,  we get $n$, which is pointless for the test.  Take a second look at the equation above,  we can see that in order to have $\ln L(\theta)$,  we need to make the $\theta$ as big as possible.  Taking into the account that $\theta$ must be less or equal to $y_i$,  the conclusion is $\theta = y_{\min}$.
+
+
+
+\section{\normalsize The Method of Moments}
+
+This procedure for estimating parameters was proposed near the turn of the twentieth century by British statistician,  Karl Pearson.  Suppose that $Y$ is a continuous random variable and that its pdf is a function of unknown parameters, $\theta_1, \theta_2, \dots, \theta_s$.  The expected value of its moments can be listed as follows:
+\[
+\begin{aligned}
+E(Y^1) &= \int _{-\infty} ^\infty y^1 \cdot f_Y(y; \theta_1, \theta_2, \dots, \theta_s) \, dy \\
+E(Y^2) &= \int _{-\infty} ^\infty y^2 \cdot f_Y(y; \theta_1, \theta_2, \dots, \theta_s) \, dy \\
+\vdots \\
+E(Y^s) &= \int _{-\infty} ^\infty y^s \cdot f_Y(y; \theta_1, \theta_2, \dots, \theta_s) \, dy \\
+\end{aligned}
+\]
+Apparently,  it's an easy task of solving $s$ parameters from $s$ equations.  By intuition,  we can approximate $E(Y^k)$ by $\displaystyle \frac{1}{n} \sum _{i=1} ^n Y^k$,  for $k=1, 2,\dots, s$. 
+
+  
+\textbf{Example (4):} find parameters $r$ and $p$ of a negative binomial distribution.
+
+We have the function form
+\[
+p_X(k; p, r) = \binom {k+r-1}{k} (1-p)^k p^r, k=0,1,2,\dots
+\]
+and
+\[
+E(X) = \frac{r(1-p)}{p} \quad \text{and} \quad \Var(X) = \frac{r(1-p)}{p^2} \\
+\]
+So $E(X^2)$ is a straight forward calculation
+\[
+E(X^2) = \Var(X) + E(X)^2 = \frac{r(1-p) - r^2 (1-p)^2}{p^2} = \frac{r(1-p)(1-r+rp)}{p^2}
+\]
+
+
+Two equations for the parameters (solution omitted):
+\[ 
+\left\{
+\begin{array}{ll}
+    \displaystyle \frac{1}{n} \sum _{i=1} ^n k_i = \overline{k} =  \frac{r(1-p)}{p} \\
+    \hspace{5pt} \\
+    \displaystyle \frac{1}{n} \sum _{i=1} ^n k_i ^2 =  \overline{k^2} =   \frac{r(1-p)(1-r+rp)}{p^2}  \\
+\end{array} 
+\right. 
+\]
+
+
+\section{\normalsize Properties of Estimators - sample standard deviation}  
+
+The method of maximum likelihood and moments do not always yield the same answer.  It comes naturally to people the question: which one should we use over the other? Or what qualities should a \say{good} estimator have? 
+No matter which method we are going to use,  the estimator, $\hat{\theta}$,  is a function of random variables, let's say $Y_i$, of sample size n.  As such,  any $\hat{\theta}$ is also a random variable,  and usually has its own pdf,  expected value and variance.  We define an estimator $\hat{\theta}$ is \say{unbiased} if {\color{RubineRed} $E(\hat{\theta}) = \theta$} for all $\theta$.  
+
+It should be noted that it's quite difficult to get the expected value and variance of $\hat{\theta}$ by direct summation,  since we don't have its pdf on hand.  However,  we can go around this problem by dividing $\hat{\theta}$ into the function of variables $Y_i$,  and conquering each and every expected value and variance of $Y_i$ get us the desired result for  $E (\hat{\theta})$.
+
+\textbf{Example (5):} Given a random sample $Y_1, Y_2, \dots, Y_n$ from a normal distribution whose parameters $\mu$ and $\sigma^2$ are both unknown,  the estimator for $\sigma^2$ is
+\[
+\hat{\sigma}^2 = \frac{1}{n} \sum _{i=1} ^n (Y_i - \overline{Y} )^2 
+\]
+Use expected value to check if $\hat{\sigma}^2 $ is unbiased.
+
+First of all,  we have two conclusions about $ \overline{Y} $:
+
+(a) $\displaystyle E( \overline{Y} )= E \left( \frac{1}{n} \sum _{i=1} ^n Y_i \right) = \frac{1}{n} \cdot E(Y_1 + Y_2 + \cdots + Y_n) = E(Y_i) $
+
+(b) $\displaystyle \Var ( \overline{Y} ) = \Var \left( \frac{1}{n} \sum _{i=1} ^n Y_i \right) = \frac{1}{n^2} \Var (Y_1 + Y_2 + \cdots + Y_n) = \frac{1}{n} \Var(Y_i) $
+
+\vspace{5pt}
+
+Now we write the $\hat{\theta}$ in function form to find the expected value as a function of real $\theta$ (here the $\theta$ refers to $\sigma^2$):
+\[
+\begin{aligned}
+E(\hat{\sigma}^2)
+&= E \left[  \frac{1}{n} \sum _{i=1} ^n (Y_i - \overline{Y} )^2  \right] \\
+&= E \left[  \frac{1}{n} \sum _{i=1} ^n (Y_i ^2 - 2Y_i \overline{Y} + \overline{Y} ^2)  \right] \\
+&= E \left[  \frac{1}{n} \left( \sum _{i=1} ^n Y_i ^2 - n \overline{Y}^2 \right)  \right] & \text{\color{RoyalBlue} \footnotesize note: $\sum _{i=1} ^n Y_i = n \overline{Y} $ } \\
+&= \frac{1}{n} \left[ \sum _{i=1} ^n E(Y_i ^2) - n E(\overline{Y}^2) \right] & \text{\color{RoyalBlue} \footnotesize note: $E(\overline{Y}^2) = \Var(\overline{Y}) + E(\overline{Y})^2  = \frac{1}{n} \sigma^2 + \mu^2 $ } \\
+&= \frac{1}{n} \left[ \sum _{i=1} ^n (\sigma^2 + \mu^2) - n \left( \frac{\sigma^2}{n} + \mu^2 \right) \right] \\
+&= \frac{n-1}{n} \cdot \sigma^2 \\
+\end{aligned}
+\]
+
+Since $E(\hat{\sigma}^2) \neq \sigma^2$,  we say $\hat{\sigma}^2$ is \say{biased}.  The way to correct its \say{biasedness} is quite straight forward,  we simply times  $\hat{\sigma}^2$ by $n/(n-1)$. 
+
+By convention,  this unbiased version of estimator in a normal distribution has a special name, $S^2$,  and is referred to as the \textit{sample variance}: 
+\[ S^2 = \frac{n}{n-1} \cdot \frac{1}{n}  \sum _{i=1} ^n (Y_i - \overline{Y} )^2 = \frac{1}{n-1} \sum _{i=1} ^n (Y_i - \overline{Y} )^2  \]
+A related concept is \textit{sample standard deviation},  though $E(S) \neq \sigma$: 
+\[ S = \sqrt{\frac{1}{n-1} \sum _{i=1} ^n (Y_i - \overline{Y} )^2 } \]
+
+
+
+\section{\normalsize Common Distributions and Their Properties}
+
+
+\begin{table}[H]
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+
+\footnotesize{
+
+\begin{tabular}{lcccc}
+\textbf{\color{RoyalBlue} Distribution} & \textbf{\color{RoyalBlue} Function} & \textbf{\color{RoyalBlue} Mean} & \textbf{\color{RoyalBlue} Variance} & \textbf{\color{RoyalBlue} M.G.F.}  \\ \hline
+\\
+Uniform          & $\displaystyle f(y) = \frac{1}{\theta_2 - \theta_1}; \theta_1 \leqslant y \leqslant \theta_2$          & $\displaystyle \frac{\theta_1 + \theta_2}{2}$          &  $\displaystyle \frac{(\theta_1 + \theta_2)^2}{12}$          &  $\displaystyle \frac{e^{t\theta_2} - e^{t\theta_1} } {t(\theta_2 - \theta_1)}$          \\
+\\
+Normal          &  \begin{tabular}[c]{@{}c@{}} $\displaystyle f(y)= \frac{1}{\sqrt{2 \pi} \sigma} \exp \left[-\frac{1}{2} \frac{(y_i - \mu)^2}{\sigma^2} \right] $ \\ $ -\infty <y < \infty $  \end{tabular}        &   $\mu$ & $\sigma^2$          &  $\displaystyle \exp \left( \mu t + \frac{t^2\sigma^2}{2} \right) $         \\
+\\
+Exponential          & $\lambda e^{-\lambda y} ; y>0 $          & $\displaystyle \frac{1}{\lambda} $          &    $\displaystyle \frac{1}{\lambda^2} $           &   $\displaystyle \frac{1}{1- t/ \lambda} $       \\
+\\
+Gamma          &  \begin{tabular}[c]{@{}c@{}} $\displaystyle f_Y(y) =\frac{\lambda ^r}{\Gamma (r)}  y^{r-1} e^{-\lambda y},  y \geqslant 0 $  \\ where $\displaystyle \Gamma (r) = \int _0 ^\infty y^{r-1} e^{-y} \, dy $    \end{tabular} &   $\displaystyle \frac{r}{\lambda}  $      &  $\displaystyle \frac{r}{\lambda^2}  $          &   $\displaystyle \frac{1}{(1-t/\lambda)^r} $      \\
+\\
+Binomial		 & \begin{tabular}[c]{@{}c@{}} $\displaystyle p(k) = \binom {n}{k} p^k (1-p)^{n-k}$ \\ $ k=0,1, 2, ...    $   \end{tabular}   &   $np$        & $np(1-p)$          &  $[pe^t +(1-p)]^n  $      \\
+\\
+\begin{tabular}[c]{@{}c@{}}  Hpyer \\ Geometric \end{tabular}   &  \begin{tabular}[c]{@{}c@{}} $ p(k) = \frac{\displaystyle  \binom {r}{k} \binom {N-r}{n-k}} {\displaystyle  \binom {N}{n}}$  \\ $k=0,1,\dots ,n$ if $n \leqslant r $ \\ $k = 0,1, \dots ,r$ if $n>r$  \end{tabular} &   $\displaystyle \frac{nr}{N}  $      &  \begin{tabular}[c]{@{}c@{}}   $\displaystyle np(1-p) \left( \frac{N-n}{N-1} \right)  $  \\ let $p=\displaystyle \frac{r}{N}$     \end{tabular}       &        \\
+\\
+Geometric          &  $p(k)=p(1-p)^{k-1}; k=1,2,...$         &  $\displaystyle \frac{1}{p}$         &   $\displaystyle \frac{1-p}{p^2}$          &   $\displaystyle \frac{pe^t}{1-(1-p)e^t} $                \\
+\\
+\begin{tabular}[c]{@{}c@{}} Negative \\ Binomial    \end{tabular}         &  \begin{tabular}[c]{@{}c@{}} $\displaystyle p(k) = \binom {k-1}{r-1} p^r (1-p)^{k-r};$ \\ $ k=r,r+1,  ...  $    \end{tabular}           &    $\displaystyle \frac{r}{p}$         &   $\displaystyle \frac{r(1-p)}{p^2}$                 &      $\displaystyle \left[ \frac{pe^t}{1-(1-p)e^t} \right]^r $     \\
+\\
+Poisson          &   $\displaystyle p(k) = \frac{\lambda^k e^{-\lambda}}{k!}; k = 0,1,2,...$        &    $\lambda$       &    $\lambda$       &   $\exp [\lambda (e^t -1) ] $       \\
+\\
+
+\\
+\end{tabular}
+
+
+}
+\end{tcolorbox}
+
+\end{table}
+
+
+
+ 
+
+
+
+
+
+
+
+
+%++++++++++++++++++++++++++++++++++++++++
+
+\clearpage
+
+\printbibliography [title={Reference}]
+
+
+%***********************************
+
+\end{document}

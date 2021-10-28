@@ -1,0 +1,345 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in, a4paper]{geometry}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{setspace}  % set spacing
+
+\setstretch{1.25}  %stretch line space to multiple x
+
+\usepackage[dvipsnames,table, xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
+\usepackage{shadowtext}
+
+\usepackage{indentfirst} % indent the first paragraph of each section
+
+\usepackage{float} %determine the position of figures in the document
+
+\usepackage{tabularx} % extra features for tabular environment
+
+\usepackage{amsmath, amsfonts, amssymb}  % improve math presentation
+\allowdisplaybreaks
+
+\def\Var{{\textrm{Var}}\,}
+\def\E{{\textrm{E}}\,}
+\def\Cov{{\textrm{Cov}}\,}
+
+\usepackage[italicdiff]{physics}
+
+\usepackage{blkarray, bigstrut}
+
+\usepackage{makecell}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+\usepackage{graphicx} % takes care of graphic including machinery
+
+\graphicspath{ {../../logos/} }
+
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+\usepackage{caption}
+
+\usepackage{subcaption}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+
+\usepackage{lipsum,lmodern}
+
+\usepackage[most]{tcolorbox}
+
+\usetikzlibrary{trees}  %add binary trees
+
+\usetikzlibrary {positioning}
+
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+
+\usepackage{blindtext}
+
+\usepackage{dirtytalk} %quotation marks
+
+
+%********************************
+
+%Bibliography
+
+\usepackage[backend=biber,  style=alphabetic,  sorting=ynt]{biblatex}
+
+\addbibresource{../../Mybib.bib}
+
+
+%********************************
+
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+
+\fancyhf{}
+
+\lhead{\footnotesize {Math Notes: Hyper-geometric} }
+\rhead{\footnotesize { } }
+\cfoot{- \thepage \ -}
+
+\title{\vspace{-90pt} 
+
+
+%**************************************************
+
+% Title Part
+\textbf  {Peer-graded Assignment} }
+\author{Cui, Xiaolong(Larry)}
+\date{\today}
+
+
+%*************************************************
+
+\begin{document}
+
+%\maketitle
+
+\thispagestyle{plain}
+
+%*************************************************
+
+\begin{figure}[H] %[!tbp]
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{uol}
+    %\caption{Flower one.}
+    %\label{fig:f1}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{goldsmiths}
+    %\caption{Flower two.}
+    %\label{fig:f2}
+  \end{subfigure}
+  %\caption{My flowers.}
+\end{figure}
+
+%****************************************************
+
+\begin{flushright}
+\footnotesize {Oct. 22\textsuperscript{nd} 2021}
+\end{flushright}
+
+\begin{center}
+\textbf{the Hyper-Geometric Distribution} \\
+\footnotesize {Study Notes $ | $ Written by Larry Cui}
+\end{center}
+
+%***************************************************
+
+%\begin{abstract}
+%\end{abstract}
+
+
+%***************************************************
+
+\setcounter{figure}{0}
+
+\vspace{10pt}
+
+
+The hypergeometric distribution is about the unordered sampling without replacement.   Here we find its distribution and relevant properties. 
+
+
+\section{\normalsize What does the distribution say?}
+
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} Hyper-geometric Theorem} \quad Suppose an urn contains $r$ red chips and $w$ white chips, where $r+w=N$.  If $n$ chips are drawn out at random, without replacement, and if $k$ denotes the number of red chips selected, then
+\[ 
+P \text{($k$ red chips are chosen)}  = \frac{\displaystyle  \binom {r}{k} \binom {w}{n-k}} {\displaystyle \binom {N}{n}} \quad \text{for} \quad k=0,1,2,...,n
+\]
+
+\end{tcolorbox}
+
+
+\textbf{Proof:} First of all,  it's intuitive to see that if you pick n chips (with k red) from the urn,  the combination of the n chips is $ \binom {r}{k} \binom {w}{n-k}$.  The total amount of the combinations,  is a traverse of this format from 0 red chip to n red chips (suppose $r>n$), and must equal to $ \binom {N}{n}$.   
+
+
+\section{\normalsize $E(X)$ and $\Var (X)$}
+
+\subsection{\small summation method}
+
+We use the summation to obtain the expected value,
+\[
+\begin{aligned}
+E(X) &= \sum _{k=0} ^n k \cdot \frac{\displaystyle  \binom {r}{k} \binom {w}{n-k}} {\displaystyle \binom {N}{n}} \\
+&= \sum _{k=0} ^n k \cdot \frac{r!}{k!(r-k)!} \cdot \frac{w!}{(n-k)!(w-n+k)!} \bigg/ \frac{N!}{n!(N-n)!} \\
+&= \sum _{k=0} ^n n \frac{r}{N} \cdot \frac{(r-1)!}{(k-1)!(r-k)!} \cdot \frac{w!}{(n-k)!(w-n+k)!} \bigg/ \frac{(N-1)!}{(n-1)!(N-n)!} \\
+&=n \frac{r}{N}  \sum _{k=1} ^n \cdot \frac{\displaystyle  \binom {r-1}{k-1} \binom {w}{n-k}} {\displaystyle \binom {N-1}{n-1}} = n \frac{r}{N} \qquad \text{\color{RoyalBlue} \footnotesize (term $k=0$ is 0, so the summation starts from $k=1$)} 
+\end{aligned}
+\]
+
+Based on this result, we go on to solve for $E(X^2)$:
+\[
+\begin{aligned}
+E(X^2) &= \sum _{k=0} ^n k^2 \cdot \frac{\displaystyle  \binom {r}{k} \binom {w}{n-k}} {\displaystyle \binom {N}{n}} =n \frac{r}{N}  \sum _{k=1} ^n k \cdot \frac{\displaystyle  \binom {r-1}{k-1} \binom {w}{n-k}} {\displaystyle \binom {N-1}{n-1}} \\
+&=  n \frac{r}{N}  \sum _{k=1} ^n ((k-1)+1) \cdot \frac{\displaystyle  \binom {r-1}{k-1} \binom {w}{n-k}} {\displaystyle \binom {N-1}{n-1}} \qquad \text{\color{RoyalBlue} \footnotesize the first term in the parenthsis is a format for $E(X-1)$} \\
+&= n \frac{r}{N} \cdot \left[ (n-1) \frac{r-1}{N-1} +1 \right] \qquad \text{\color{RoyalBlue} \footnotesize sum of distribution equals to 1} \\
+\end{aligned}
+\]
+
+Now we can use formula $\Var (x) = E(X^2) - E(X)^2$ to get the result,  if we have $p= r/N$,
+\[
+\begin{aligned}
+np \cdot \left[ (n-1) \frac{r-1}{N-1} +1 \right] - (np)^2
+&=\frac{np}{N-1} \left[ (n-1)(r-1) +(N-1) - np(N-1) \right] \\
+&=\frac{np}{N-1} (nr - r - n + 1 + N -1 -nr +np) \\
+&=\frac{np}{N-1} (N -n + np - Np) \qquad \text{\color{RoyalBlue} \footnotesize ($r=Np$) } \\ 
+&=np(1-p) \frac{N-n}{N-1} \\
+\end{aligned}
+\]
+
+
+\subsection{\small alternative approach}
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} Covariance Definition} \quad Given random variables $X$ and $Y$ with variances, define the \textit{covariance} of $X$ and $Y$, written Cov(X,Y),  as
+\[ 
+\text{Cov}(X,Y) = E(XY) - E(X)E(Y)
+\]
+
+\end{tcolorbox}
+
+
+A lemma comes directly from the above definition: when $X$ and $Y$ are independent variables,  Cov(X,Y) = 0,  since $E(XY) = E(X)E(Y)$.  
+
+The following theorem is to find the variance of the sum of two variables.
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} Theorem 2.2} \quad Suppose $X$ and $Y$ are random variables with finite variances, and a and b are constants.  Then
+\[ 
+\Var (aX + bY) = a^2 \Var(X) + b^2 \Var(Y) + 2ab \, \text{Cov} (X,Y)
+\]
+
+\end{tcolorbox}
+
+\textbf{Proof:} For convenience,  let's denote $E(X)$ by $\mu_X$ and $E(Y)$ by $\mu_Y$,  then
+\[
+\begin{aligned}
+\Var (aX + bY) 
+&= E[(aX+bY)^2] - (a\mu_X + b\mu_Y)^2 \qquad \text{\color{RoyalBlue} \footnotesize note: $E(aX)=aE(X)$}  \\
+&=E(a^2X^2 + b^2Y^2 + 2abXY) - a^2\mu_X^2- 2ab\mu_X\mu_Y - b^2\mu_Y^2 \\
+&=a^2 [E(X^2)-\mu_X^2] + b^2 [E(Y^2) - \mu_Y^2] + 2ab[E(XY)-\mu_X\mu_y] \\ 
+&=a^2 \Var(X) + b^2\Var(Y) + 2ab \, \text{Cov}(X,Y) \\
+\end{aligned}
+\]
+
+
+\begin{tcolorbox}[
+	enhanced, 
+	width=\textwidth, 
+	%center upper,
+	fontupper=\normalsize,% \bfseries,
+	drop fuzzy shadow southwest,
+	boxrule=0.4pt,
+	sharp corners,
+	colframe=yellow!80!black,
+	colback=yellow!10]
+	
+\textbf{\color{RoyalBlue} Lemma} \quad If $X$ and $Y$ are independent variables, then
+\[ 
+\Var (aX + bY) = a^2 \Var(X) + b^2 \Var(Y)
+\]
+
+\end{tcolorbox}
+
+We now revisit the hyper geometric distribution.  A random sample of size n is picked without replacement,  and the random variable X is defined to the red chip amount of the sample: $X = X_1 + X_2 + \cdots X_n$.  If we look each single $X_i$,  we know it's expected value is, no matter of its order:
+\[ E(X_i) = 1 \cdot \frac{r}{N} + 0 \cdot \frac{N-r}{N} = \frac{r}{N} \]
+and $E(X_i^2)$ is same as $E(X_i)$,
+\[ E(X_i^2) = E(X_i) = \frac{r}{N} \]
+again we have $\Var (X_i)$,
+\[ \Var (X_i) = E(X_i^2)-E(X_i)^2= \frac{r}{N} - \left( \frac{r}{N} \right)^2 \]
+
+
+However,  for any $j \neq k$, $X_j$ and $X_k$ are not independent.  We can calculate their covariance as
+\[
+\begin{aligned}
+\Cov(X_j, X_k) 
+&= E(X_jX_k) - E(X_j)E(X_k) \\
+&= 1 \cdot P(X_j=X_k=1) - \left( \frac{r}{N} \right)^2 \quad \text{\color{RoyalBlue} \footnotesize (in other three scenarios $E(X_jX_k)=0$)} \\
+&= \frac{r}{N} \cdot \frac{r-1}{N-1} - \frac{r^2}{N^2}   \\
+&= - \frac{r}{N} \cdot \frac{N-r}{N} \cdot \frac{1}{N-1} \\
+\end{aligned} 
+\]
+
+Now according to Theorem 2.2,  we have the variance of X below (let $p$ denote $\displaystyle \frac{r}{N}$),
+\[
+\begin{aligned}
+\Var (X) 
+&= \sum _{i=1} ^n \Var (X_i) + 2 \sum _{j<k} ^n \Cov(X_j, X_k) \\
+&= np(1-p) - 2 \binom {n}{2} p(1-p) \cdot \frac{1}{N-1} \\
+&= p(1-p) \left[ n - \frac{n(n-1)}{N-1} \right] \\
+&= np(1-p) \cdot \frac{N-n}{N-1} \\
+\end{aligned} 
+\]
+
+
+
+
+
+
+
+
+%++++++++++++++++++++++++++++++++++++++++
+
+\clearpage
+
+\printbibliography [title={Reference}]
+
+
+%***********************************
+
+\end{document}
